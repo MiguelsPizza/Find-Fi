@@ -33,7 +33,7 @@ function SideBar({
 }) {
   const [rememberAuto, setRemeberAuto] = useState(null);
   const [networkToAdd, setnetworkToAdd] = useState(false);
-  console.log('modal toggle',!!networkToAdd)
+  // console.log('modal toggle',!!networkToAdd)
   let counter = 0;
   // ${getBackgroundColor(network.quality)}
 
@@ -46,6 +46,7 @@ function SideBar({
   // console.log('auth', auth)
 
   //onMouseLeave={() => decideToggleFetch}
+  let keyCounter = 0;
   return (
     <Container style={{ width: "100%" }}>
       <Navbar bg="dark" variant="dark">
@@ -74,20 +75,20 @@ function SideBar({
         <Accordion>
           {networks.map((network) => {
             const markedKnown = knownNetworks.filter((knowNetwork) => {
-              if (network.ssid === "NETGEAR34-5G") {
-                console.log("knowNetwork", knowNetwork.ssid.length);
-                console.log("network", network.ssid.length);
-                console.log(
-                  "knowNetwork[network.ssid]",
-                  knowNetwork.ssid.trim() === network.ssid.trim()
-                );
-              }
+              // if (network.ssid === "NETGEAR34-5G") {
+              //   console.log("knowNetwork", knowNetwork.ssid.length);
+              //   console.log("network", network.ssid.length);
+              //   console.log(
+              //     "knowNetwork[network.ssid]",
+              //     knowNetwork.ssid.trim() === network.ssid.trim()
+              //   );
+              // }
               return knowNetwork.ssid.trim() === network.ssid.trim();
             });
             if (markedKnown.length > 0) {
               return (
                 <SideBarItem
-                  key = {network.ssid}
+                  key = {keyCounter++}
                   network={network}
                   eventKey={counter++}
                   known={true}
@@ -96,7 +97,7 @@ function SideBar({
             } else {
               return (
                 <SideBarItem
-                  key = {network.ssid}
+                  key = {keyCounter++}
                   network={network}
                   eventKey={counter++}
                   known={false}

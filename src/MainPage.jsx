@@ -27,7 +27,7 @@ const MainPage = ({ auth, firestore }) => {
   const[currentTab, setTab] = useState("SideBar")
 
   const updateNetworksData = (data) => {
-    console.log('data', data)
+    // console.log('data', data)
     if (data) {
       setNetworks(data);
     } else {
@@ -42,7 +42,7 @@ const MainPage = ({ auth, firestore }) => {
     }
   };
   useEffect(() => {
-    console.log("autoFetch", autoFetch);
+    // console.log("autoFetch", autoFetch);
     if (autoFetch) {
       let eventSource = new EventSource("http://localhost:8550/auto");
       eventSource.onmessage = (e) => updateNetworksData(JSON.parse(e.data));
@@ -57,7 +57,7 @@ const MainPage = ({ auth, firestore }) => {
         eventSource.close();
       };
     } else {
-      console.log("here");
+      // console.log("here");
       updateNetworksData(null);
     }
   }, [autoFetch]);
@@ -68,7 +68,7 @@ const MainPage = ({ auth, firestore }) => {
       const docRef = doc(db, "Users", auth.currentUser.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
+        // console.log("Document data:", docSnap.data());
         setKnowNetworks(docSnap.data().networks);
       } else {
         // doc.data() will be undefined in this case
@@ -80,7 +80,7 @@ const MainPage = ({ auth, firestore }) => {
         await setDoc(doc(db, "Users", auth.currentUser.uid), userData, {
           merge: true,
         });
-        console.log("added user");
+        // console.log("added user");
       }
     };
     getUserData();

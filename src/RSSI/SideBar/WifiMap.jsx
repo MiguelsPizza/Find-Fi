@@ -39,17 +39,21 @@ function WifiMap() {
       const db = getFirestore();
       const querySnapshot = await getDocs(collection(db, "Public Networks"));
       const arr = [];
-      console.log("querySnapshot", querySnapshot);
       querySnapshot.forEach((doc) => {
         arr.push(doc.data());
       });
       setHotSpots(arr);
     };
     getHotSpots();
+    navigator.geolocation.watchPosition(function (position) {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+    });
   }, []);
 
 
 
+  let keyCounter = 0;
   return (
     <div>
       <ReactMapGL
@@ -62,29 +66,27 @@ function WifiMap() {
         }}
       >
         {hotSpots.map((hotspot) => {
-          console.log(hotspot["Router Location"]._long);
-          console.log(hotspot["Router Location"]._lat);
-          console.log(hotspot.NetworkName);
+          // console.log(hotspot["Router Location"]._long);
+          // console.log(hotspot["Router Location"]._lat);
+          // console.log(hotspot.NetworkName);
 
           return (
             <Marker
-              Key={hotspot.NetworkName}
+              key={keyCounter++}
               latitude={hotspot["Router Location"]._lat}
               longitude={hotspot["Router Location"]._long}
             >
               <div className="marker" onClick={() => updatetoggle(!toggle)}>
                 <MapAnimation />
                 <MapModal
-          hotspot={hotspot.NetworkName}
-          toggle={toggle}
-          updatetoggle={updatetoggle}
-        />
+                  hotspot={hotspot.NetworkName}
+                  toggle={toggle}
+                  updatetoggle={updatetoggle}
+                />
               </div>
             </Marker>
           );
         })}
-
-
       </ReactMapGL>
     </div>
   );

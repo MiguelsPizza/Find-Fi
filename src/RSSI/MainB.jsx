@@ -30,7 +30,7 @@ const MainButton = () => {
   const [ssid, changessid] = useState(null);
 
   const upDateWIFIdata = (data) => {
-    console.log(data[0]);
+    // console.log(data[0]);
     changeRssi(data[0].quality);
     changechannel(data[0].channel);
     changefrequency(data[0].frequency);
